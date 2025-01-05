@@ -2,9 +2,10 @@
 
 import React, { useState } from 'react';
 
-import Search from './Search';// Adjust the import path based on your project structure
+import Search from './Search';
 import Link from 'next/link';
 import Image from 'next/image';
+import DbAddedProducts from '../dbProducts/DbAddedProducts';
 
 interface Product {
   id: number;
@@ -43,7 +44,7 @@ export default function Products() {
       <div className="container mx-auto px-4">
         <header className="flex justify-between items-center mb-8">
           <h1 className="text-4xl font-bold text-gray-800">Our Products</h1>
-          <Link href={'./testimonials'}>
+          <Link href={'./dbProducts'}>
             <button className="bg-blue-500 text-white px-4 py-2 rounded-md">
               Add Products
             </button>
@@ -90,6 +91,7 @@ export default function Products() {
           ))}
         </div>
       </div>
+      <DbAddedProducts/>
     </div>
   );
 }
