@@ -5,7 +5,6 @@ import React, { ChangeEvent, useState } from 'react';
 import { supabase } from '../supabase';
 import { useToast } from '@/hooks/use-toast';
 import Image from 'next/image';
-import DbAddedProducts from '../dbProducts/DbAddedProducts';
 
 
 function AddProducts() {
@@ -18,7 +17,6 @@ function AddProducts() {
     const { error } = await supabase.from('products').insert(form).single();
 
     if ( error) {
-      
       toast({
         title: 'Error',
         description: 'all fields must be filled',

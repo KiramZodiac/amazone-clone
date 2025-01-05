@@ -49,7 +49,7 @@ function DbAddedProducts() {
     };
 
     fetchProducts();
-  }, [toast]);
+  }, []);
 
   const deleteProduct = async (id: number, title: string) => {
     const { error } = await supabase.from('products').delete().eq('id', id);
