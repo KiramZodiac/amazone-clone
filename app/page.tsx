@@ -1,14 +1,20 @@
 
-import Products from "./components/Products";
+
+import DbAddedProducts from "./dbProducts/DbAddedProducts";
 
 
 export default async function Home() {
-  // Fetch data from the 'test' table
+
  
   return (
     <div className="">
 
-      <Products /> 
+
+      <DbAddedProducts/>
+
     </div>
   );
 }
+
+
+

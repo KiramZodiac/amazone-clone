@@ -3,8 +3,9 @@
 import { Button } from '@/components/ui/button';
 import { supabase } from './supabase';
 import { useEffect, useState } from 'react';
-import SignIn from './SignIn';
+import SignIn from './login/page';
 import Image from 'next/image';
+
 
 interface User {
   firstName: string;
@@ -14,15 +15,16 @@ interface User {
 
 const UserProfile = () => {
   const [user, setUser] = useState<User | null>(null);
+ 
 
   useEffect(() => {
     // Fetch the authenticated user details
     const fetchUser = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
+
+      const {data:{ session }} = await supabase.auth.getSession();
 
       if (session?.user) {
+        
         const { full_name, picture } = session.user.user_metadata;
         const [firstName, ...rest] = (full_name || '').split(' ');
         const lastName = rest.join(' ');
@@ -51,6 +53,8 @@ const UserProfile = () => {
         });
       } else if (event === 'SIGNED_OUT') {
         setUser(null);
+        
+        
       }
     });
 
@@ -64,7 +68,8 @@ const UserProfile = () => {
     if (error) {
       console.error('Logout error:', error.message);
     } else {
-      setUser(null);
+    setUser(null)
+      
     }
   };
 

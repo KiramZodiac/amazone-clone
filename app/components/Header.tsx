@@ -21,7 +21,7 @@ function Header() {
         <div className="hidden sm:flex items-center gap-2 justify-between">
           <SlLocationPin className="text-xl" />
           <p className="text-sm">
-            Shipping to the <span className="font-bold">UGANDA</span>
+            Shipping to the  <span className="font-bold">UGANDA</span>
           </p>
         
         </div>

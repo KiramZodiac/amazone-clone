@@ -1,4 +1,4 @@
-
+'use client'
 import { Button } from '@/components/ui/button'
 import {
     AlertDialog,
@@ -17,6 +17,8 @@ import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { toast } from '@/hooks/use-toast'
 import { supabase } from '../supabase'
+import { Input } from '@/components/ui/input'
+
 
 interface Product {
     id: number;
@@ -30,6 +32,9 @@ interface Product {
 
 function DbAddedProducts() {
     const [products, setProducts] = useState<Product[]>([]);
+    const [searchInput,setSearchInput] = useState('')
+
+
  // Fetch products from Supabase
  useEffect(() => {
     const fetchProducts = async () => {
@@ -38,6 +43,7 @@ function DbAddedProducts() {
         .select('*')
         .order('id', { ascending: false });
       if (error) {
+      
         toast({
           title: 'Error',
           description: error.message,
@@ -50,6 +56,10 @@ function DbAddedProducts() {
 
     fetchProducts();
   }, []);
+
+
+
+ 
 
   const deleteProduct = async (id: number, title: string) => {
     const { error } = await supabase.from('products').delete().eq('id', id);
@@ -70,14 +80,27 @@ function DbAddedProducts() {
     }
   };
 
+const searcedProduct = products.filter((prd)=> prd.title.toLocaleLowerCase().includes(searchInput.toLocaleLowerCase()))
 
   return (
-    <div>
-      <div className="flex justify-center items-center min-h-screen">
-      <div className="bg-white shadow-lg rounded-lg p-8 w-full ">
-      <h2 className="text-xl font-bold text-gray-800 mt-10">Product List</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-          {products.map((product) => (
+    <div className="min-h-screen bg-gray-50 py-12 pt-24">
+    <div className="container mx-auto px-4">
+      <header className="flex justify-between items-center mb-8">
+        <h1 className="text-4xl font-bold text-gray-800">Our Products</h1>
+        <Link href={'../components/productsForm'}>
+          <button className="bg-blue-500 text-white px-4 py-2 rounded-md">
+            Add New Products
+          </button>
+        </Link>
+      </header>
+
+      {/* Search Component */}
+      <div className="mb-8">
+        <Input onChange={(e)=>setSearchInput(e.target.value)}/>
+      </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
+          {searcedProduct.map((product) => (
             <div
               key={product.id}
               className="bg-white border rounded-lg shadow-lg hover:shadow-xl transition-shadow p-4"
@@ -117,7 +140,7 @@ function DbAddedProducts() {
                       </AlertDialogHeader>
                       <AlertDialogFooter>
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction
+                        <AlertDialogAction className='hover:bg-red-900'
                           onClick={() => deleteProduct(product.id, product.title)}
                         >
                           Continue
@@ -132,7 +155,7 @@ function DbAddedProducts() {
         </div>
     </div>
     </div>
-</div>
+
   )
 }
 
